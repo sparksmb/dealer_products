@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_142125) do
+ActiveRecord::Schema.define(version: 2020_06_21_143622) do
 
   create_table "organizations", force: :cascade do |t|
     t.string "type"
@@ -19,4 +19,24 @@ ActiveRecord::Schema.define(version: 2020_06_21_142125) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "parts", force: :cascade do |t|
+    t.string "name"
+    t.string "part_no"
+    t.integer "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_parts_on_organization_id"
+  end
+
+  create_table "trailers", force: :cascade do |t|
+    t.string "name"
+    t.decimal "length"
+    t.integer "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_trailers_on_organization_id"
+  end
+
+  add_foreign_key "parts", "organizations"
+  add_foreign_key "trailers", "organizations"
 end
