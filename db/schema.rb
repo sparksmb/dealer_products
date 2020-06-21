@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_143622) do
+ActiveRecord::Schema.define(version: 2020_06_21_145631) do
 
   create_table "organizations", force: :cascade do |t|
     t.string "type"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 2020_06_21_143622) do
     t.index ["organization_id"], name: "index_parts_on_organization_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.string "sellable_type", null: false
+    t.integer "sellable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_products_on_organization_id"
+    t.index ["sellable_type", "sellable_id"], name: "index_products_on_sellable_type_and_sellable_id"
+  end
+
   create_table "trailers", force: :cascade do |t|
     t.string "name"
     t.decimal "length"
@@ -38,5 +48,6 @@ ActiveRecord::Schema.define(version: 2020_06_21_143622) do
   end
 
   add_foreign_key "parts", "organizations"
+  add_foreign_key "products", "organizations"
   add_foreign_key "trailers", "organizations"
 end
