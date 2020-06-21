@@ -1,11 +1,8 @@
-class Product < ApplicationRecord
+class Manufacturing < ApplicationRecord
   belongs_to :organization
   belongs_to :sellable, polymorphic: true
+  belongs_to :location
 
   scope :trailers, -> { where(sellable_type: 'Trailer') }
   scope :parts , -> { where(sellable_type: 'Part') }
-
-  def inventory_count
-    organization.inventories.where(sellable: self.sellable).count
-  end
 end

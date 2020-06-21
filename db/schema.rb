@@ -10,7 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_145631) do
+ActiveRecord::Schema.define(version: 2020_06_21_150548) do
+
+  create_table "inventories", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.string "sellable_type", null: false
+    t.integer "sellable_id", null: false
+    t.integer "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_inventories_on_location_id"
+    t.index ["organization_id"], name: "index_inventories_on_organization_id"
+    t.index ["sellable_type", "sellable_id"], name: "index_inventories_on_sellable_type_and_sellable_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "manufacturings", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.string "sellable_type", null: false
+    t.integer "sellable_id", null: false
+    t.integer "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_manufacturings_on_location_id"
+    t.index ["organization_id"], name: "index_manufacturings_on_organization_id"
+    t.index ["sellable_type", "sellable_id"], name: "index_manufacturings_on_sellable_type_and_sellable_id"
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string "type"
@@ -47,6 +77,10 @@ ActiveRecord::Schema.define(version: 2020_06_21_145631) do
     t.index ["organization_id"], name: "index_trailers_on_organization_id"
   end
 
+  add_foreign_key "inventories", "locations"
+  add_foreign_key "inventories", "organizations"
+  add_foreign_key "manufacturings", "locations"
+  add_foreign_key "manufacturings", "organizations"
   add_foreign_key "parts", "organizations"
   add_foreign_key "products", "organizations"
   add_foreign_key "trailers", "organizations"

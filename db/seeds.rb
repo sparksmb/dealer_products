@@ -14,4 +14,18 @@ Product.find_or_create_by(organization: d, sellable: t)
 Product.find_or_create_by(organization: d, sellable: p)
 Product.find_or_create_by(organization: d2, sellable: t2)
 
+if d.inventories.empty?
+  p = d.products.trailers.first
+  l = Location.find_or_create_by(name: 'Lot A')
+  3.times { Inventory.create(organization: d, sellable: p.sellable, location: l) }
 
+  p = d.products.parts.first
+  l = Location.find_or_create_by(name: 'Parts Bin A')
+  3.times { Inventory.create(organization: d, sellable: p.sellable, location: l) }
+end
+
+if m.manufacturings.empty?
+  p = m.products.trailers.first
+  l = Location.find_or_create_by(name: 'Plant A')
+  3.times { Manufacturing.create(organization: m, sellable: p.sellable, location: l) }
+end
