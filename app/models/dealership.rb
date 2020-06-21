@@ -1,0 +1,2 @@
+class Dealership < Organization
+end

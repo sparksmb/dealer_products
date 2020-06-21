@@ -1,0 +1,2 @@
+class OriginalEquipmentManufacturer < Organization
+end
